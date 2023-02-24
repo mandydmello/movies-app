@@ -4,6 +4,18 @@ import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import FormControl from "@material-ui/core/FormControl";
+import Typography from "@material-ui/core/Typography";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Checkbox from "@material-ui/core/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const styles = (theme) => ({
   root: {
@@ -24,6 +36,11 @@ const styles = (theme) => ({
   releasedMoviesGrid: {
     transform: "translateZ(0)",
   },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 240,
+    maxWidth: 240,
+  },
   title: {
     color: theme.palette.primary.light,
   },
@@ -32,6 +49,13 @@ const styles = (theme) => ({
 const Home = (props) => {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [releasedMovies, setReleasedMovies] = useState([]);
+  const [movieName, setMovieName] = useState("");
+  const [genres, setGenres] = useState([]);
+  const [artists, setArtists] = useState([]);
+  const [genreList, setGenreList] = useState([]);
+  const [artistList, setArtistList] = useState([]);
+  const [releaseDateStart, setReleaseDateStart] = useState("");
+  const [releaseDateEnd, setReleaseDateEnd] = useState("");
   const { classes } = props;
 
   useEffect(() => {
@@ -56,7 +80,61 @@ const Home = (props) => {
     })
       .then((response) => response.json())
       .then((response) => setReleasedMovies(response.movies));
+
+    //Fetch genres
+    fetch(props.baseUrl + "genres", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => setGenreList(response.genres));
+
+    //Fetch artists
+    fetch(props.baseUrl + "artists?page=1&limit=15", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => setArtistList(response.artists));
   }, []);
+
+  const applyFilterHandler = () => {
+    let initialQueryString = "?status=RELEASED";
+
+    if (movieName !== "") {
+      initialQueryString += "&title=" + movieName;
+    }
+    if (genres.length > 0) {
+      initialQueryString += "&genres=" + genres.toString();
+    }
+    if (artists.length > 0) {
+      initialQueryString += "&artists=" + artists.toString();
+    }
+    if (releaseDateStart !== "") {
+      initialQueryString += "&start_date=" + releaseDateStart;
+    }
+    if (releaseDateEnd !== "") {
+      initialQueryString += "&end_date=" + releaseDateEnd;
+    }
+
+    fetch(props.baseUrl + "movies" + encodeURI(initialQueryString), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setReleasedMovies(response.movies);
+      });
+  };
 
   return (
     <div>
@@ -84,7 +162,7 @@ const Home = (props) => {
         ))}
       </GridList>
       <div className="flex-container">
-        <div>
+        <div className="left-side-homepage">
           <GridList
             className={classes.releasedMoviesGrid}
             cellHeight={350}
@@ -113,6 +191,104 @@ const Home = (props) => {
               </GridListTile>
             ))}
           </GridList>
+        </div>
+        <div className="right-side-homepage">
+          <Card>
+            <CardContent>
+              <FormControl className={classes.formControl}>
+                <Typography className={classes.title} color="textSecondary">
+                  FIND MOVIES BY:
+                </Typography>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="movieName">Movie Name</InputLabel>
+                <Input
+                  id="movieName"
+                  onChange={(e) => setMovieName(e.target.value)}
+                />
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="select-multiple-checkbox">
+                  Genres
+                </InputLabel>
+                <Select
+                  multiple
+                  input={<Input id="select-multiple-checkbox-genre" />}
+                  renderValue={(selected) => selected.join(",")}
+                  value={genres}
+                  onChange={(e) => setGenres(e.target.value)}
+                >
+                  {genreList.map((genre) => (
+                    <MenuItem key={genre.id} value={genre.genre}>
+                      <Checkbox checked={genres.indexOf(genre.genre) > -1} />
+                      <ListItemText primary={genre.genre} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="select-multiple-checkbox">
+                  Artists
+                </InputLabel>
+                <Select
+                  multiple
+                  input={<Input id="select-multiple-checkbox" />}
+                  renderValue={(selected) => selected.join(",")}
+                  value={artists}
+                  onChange={(e) => setArtists(e.target.value)}
+                >
+                  {artistList.map((artist) => (
+                    <MenuItem
+                      key={artist.id}
+                      value={artist.first_name + " " + artist.last_name}
+                    >
+                      <Checkbox
+                        checked={
+                          artists.indexOf(
+                            artist.first_name + " " + artist.last_name
+                          ) > -1
+                        }
+                      />
+                      <ListItemText
+                        primary={artist.first_name + " " + artist.last_name}
+                      />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id="releaseDateStart"
+                  label="Release Date Start"
+                  type="date"
+                  defaultValue=""
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => setReleaseDateStart(e.target.value)}
+                />
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <TextField
+                  id="releaseDateEnd"
+                  label="Release Date End"
+                  type="date"
+                  defaultValue=""
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => setReleaseDateEnd(e.target.value)}
+                />
+              </FormControl>
+              <br />
+              <br />
+              <FormControl className={classes.formControl}>
+                <Button
+                  onClick={() => applyFilterHandler()}
+                  variant="contained"
+                  color="primary"
+                >
+                  APPLY
+                </Button>
+              </FormControl>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
