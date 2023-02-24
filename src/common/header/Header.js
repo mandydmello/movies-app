@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.svg";
+import "./Header.css";
 import Button from "@material-ui/core/Button";
 import Modal from "react-modal";
 import Tabs from "@material-ui/core/Tabs";
@@ -25,7 +26,7 @@ function TabContainer(props) {
   const { index, value, children } = props;
   return (
     <div>
-      <div hidden={value !== index}>
+      <div style={{ padding: 0, textAlign: "center" }} hidden={value !== index}>
         {value === index && <div>{children}</div>}
       </div>
     </div>
@@ -287,7 +288,7 @@ const Header = (props) => {
             </div>
           </TabContainer>
           <TabContainer value={value} index={1}>
-            <div>
+            <div style={{ margin: "20px", padding: "0 20px" }}>
               <FormControl required className="formControl">
                 <InputLabel htmlFor="first_name">First Name</InputLabel>
                 <Input
@@ -362,11 +363,14 @@ const Header = (props) => {
               </FormControl>
               <br />
               <br />
-              <FormHelperText className={showdisplay}>
+              <FormHelperText
+                className={showdisplay}
+                style={{ fontSize: "14px", color: "black" }}
+              >
                 Registration Successful. Please Login!
               </FormHelperText>
               <br />
-              <div>
+              <div style={{ textAlign: "center" }}>
                 <Button
                   variant="contained"
                   color="primary"
