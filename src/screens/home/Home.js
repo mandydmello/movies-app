@@ -16,6 +16,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import "./Home.css";
 
 const styles = (theme) => ({
   root: {
