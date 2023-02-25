@@ -248,7 +248,7 @@ const Header = (props) => {
             <Tab label="Register" />
           </Tabs>
           <TabContainer value={value} index={0}>
-            <FormControl required className="formControl">
+            <FormControl required className="form-control">
               <InputLabel htmlFor="username">Username</InputLabel>
               <Input
                 id="username"
@@ -262,7 +262,7 @@ const Header = (props) => {
             </FormControl>
             <br />
             <br />
-            <FormControl required className="formControl">
+            <FormControl required className="form-control">
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
                 id="password"
@@ -289,7 +289,7 @@ const Header = (props) => {
           </TabContainer>
           <TabContainer value={value} index={1}>
             <div style={{ margin: "20px", padding: "0 20px" }}>
-              <FormControl required className="formControl">
+              <FormControl required className="form-control">
                 <InputLabel htmlFor="first_name">First Name</InputLabel>
                 <Input
                   id="first_name"
@@ -303,7 +303,7 @@ const Header = (props) => {
               </FormControl>
               <br />
               <br />
-              <FormControl required className="formControl">
+              <FormControl required className="form-control">
                 <InputLabel htmlFor="last_name">Last Name</InputLabel>
                 <Input
                   refs="last_name"
@@ -318,7 +318,7 @@ const Header = (props) => {
               </FormControl>
               <br />
               <br />
-              <FormControl required className="formControl">
+              <FormControl required className="form-control">
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
                   refs="email"
@@ -333,7 +333,7 @@ const Header = (props) => {
               </FormControl>
               <br />
               <br />
-              <FormControl required className="formControl">
+              <FormControl required className="form-control">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
                   refs="password"
@@ -348,7 +348,7 @@ const Header = (props) => {
               </FormControl>
               <br />
               <br />
-              <FormControl required className="formControl">
+              <FormControl required className="form-control">
                 <InputLabel htmlFor="contact">Contact No.</InputLabel>
                 <Input
                   refs="mobile_number"
