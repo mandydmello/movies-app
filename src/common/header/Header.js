@@ -10,6 +10,7 @@ import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import { Link } from "react-router-dom";
+import "../../common/common.css";
 
 const customStyles = {
   content: {

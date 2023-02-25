@@ -123,7 +123,12 @@ const Details = (props) => {
             <div className="margin-top-16">
               <Typography>
                 <span className="bold-text">Plot: </span>
-                <a href={movie.wiki_url}>(Wiki Link)</a>
+                <a
+                  href={movie.wiki_url}
+                  style={{ textDecoration: "underline" }}
+                >
+                  (Wiki Link)
+                </a>
                 {""} {movie.storyline}
               </Typography>
             </div>
