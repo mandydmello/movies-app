@@ -7,6 +7,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { Link } from "react-router-dom";
+import "./Details.css";
 
 const Details = (props) => {
   const [movie, setMovie] = useState({});
@@ -123,7 +124,7 @@ const Details = (props) => {
               <Typography>
                 <span className="bold-text">Plot: </span>
                 <a href={movie.wiki_url}>(Wiki Link)</a>
-                {movie.storyline}
+                {""} {movie.storyline}
               </Typography>
             </div>
             <div className="trailer-container">

@@ -1,0 +1,86 @@
+.details-page {
+  text-align: left;
+}
+
+.back-button {
+  margin-left: 24px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+  height: 24px;
+}
+
+.back-button > link {
+  cursor: pointer;
+}
+
+.flex-container-details {
+  display: flex;
+}
+
+.flex-container-details > div {
+  margin: 0px 16px;
+}
+
+.left-details {
+  width: 20%;
+  text-align: center;
+}
+
+.middle-details {
+  width: 60%;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.right-details {
+  width: 20%;
+}
+
+.yellow {
+  color: yellow;
+  cursor: pointer;
+}
+
+.black {
+  color: none;
+  cursor: pointer;
+}
+
+.margin-top-16 {
+  margin-top: 16px;
+}
+
+.margin-top-bottom-16 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.trailer-container {
+  margin: 16px 0px 16px 0px !important;
+}
+iframe {
+  width: 100% !important;
+}
+
+.artist-details {
+  cursor: pointer;
+}
+@media (max-width: 992px) {
+  .left-details {
+    width: 100%;
+    text-align: center;
+  }
+  .middle-details {
+    width: 90%;
+  }
+  .right-details {
+    width: 100%;
+  }
+  .flex-container-details {
+    flex-direction: column;
+  }
+  .padding-right {
+    margin-right: 32px;
+  }
+}
